@@ -63,10 +63,13 @@ with col1:
     video_source_animal = st.radio("Select Video Source (Animal):", ("Webcam", "Mobile Camera"), key="animal")
 
     if video_source_animal == "Webcam":
-        selected_camera_animal = st.selectbox("Select Camera:", list(camera_options.keys()), index=0)
+     selected_camera_animal = st.selectbox("Select Camera:", list(camera_options.keys()), index=0)
+    
+    if selected_camera_animal in camera_options:
         video_source_animal = camera_options[selected_camera_animal]
     else:
-        video_source_animal = st.text_input("Enter Mobile Camera URL (Animal)", key="animal_url")
+        st.warning("Selected camera not found. Using default camera.")
+        video_source_animal = 0
 
     start_animal = st.button("Start Animal Detection")
     stop_animal = st.button("Stop Animal Detection")
@@ -105,10 +108,15 @@ with col2:
     video_source_human = st.radio("Select Video Source (Human):", ("Webcam", "Mobile Camera"), key="human")
 
     if video_source_human == "Webcam":
-        selected_camera_human = st.selectbox("Select Camera:", list(camera_options.keys()), index=0, key="human_cam")
+     selected_camera_human = st.selectbox("Select Camera:", list(camera_options.keys()), index=0, key="human_cam")
+    
+    # Handle missing camera safely
+    if selected_camera_human in camera_options:
         video_source_human = camera_options[selected_camera_human]
     else:
-        video_source_human = st.text_input("Enter Mobile Camera URL (Human)", key="human_url")
+        st.warning("Selected camera not found. Using default camera.")
+        video_source_human = 0  # Default to built-in camera
+
 
     start_human = st.button("Start Human Detection")
     stop_human = st.button("Stop Human Detection")
